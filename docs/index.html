@@ -20,7 +20,7 @@
     <link href="css/style.css" rel="stylesheet">
 
     <script src="js/leaflet.js"></script>
-    <script src="https://rawgithub.com/mylen/leaflet.TileLayer.WMTS/master/leaflet-tilelayer-wmts.js"></script>
+    <script src="js/leaflet-tilelayer-wmts.js"></script>
     
 
 </head>
@@ -28,8 +28,7 @@
 <body onload="getLocation();">
     
     <div id="mapid"></div>
-    <div id="debug"></div>
-    
+   
     <script>
         
 
@@ -72,7 +71,8 @@
 */
 
         function getLocation() {
-                // Check whether browser supports Geolocation API or not
+                
+            // Check whether browser supports Geolocation API or not
                 if (navigator.geolocation) { // Supported
 
                     var positionOptions = {
