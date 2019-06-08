@@ -70,6 +70,8 @@
 
 */
 
+        var mymap = new L.Map('mapid');
+        
         function getLocation() {
                 
             // Check whether browser supports Geolocation API or not
@@ -96,7 +98,7 @@
             }
             function getPosition(position) {
            
-                var mymap = new L.Map('mapid');
+                
                 var latlng = new L.LatLng(position.coords.latitude, position.coords.longitude);
                 mymap.setZoom(11);
                 mymap.setView(latlng, 18);
