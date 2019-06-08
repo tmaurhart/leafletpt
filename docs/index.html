@@ -30,7 +30,8 @@
     <script>
         var mymap = L.map('mapid', {
             minZoom: 18,
-            maxZoom: 18
+            maxZoom: 18,
+            zoomControl: false
         }).setView([47.583896, 12.173329], 18);
 
         var ign = new L.tileLayer("https://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
