@@ -25,7 +25,7 @@
 
 </head>
 
-<body onload="getLocation();">
+<body>
     
     <div id="mapid"></div>
    
@@ -55,13 +55,6 @@
                 
             // Check whether browser supports Geolocation API or not
             if (navigator.geolocation) { // Supported
-
-                var positionOptions = {
-                    timeout: Infinity,
-                    maximumAge: 0,
-                    enableHighAccuracy: true
-                }
-
                 watchID = navigator.geolocation.watchPosition(function(position) {
                     getPosition(position);
                 });
