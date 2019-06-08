@@ -30,10 +30,10 @@
     <div id="mapid"></div>
    
     <script>
-        var mymap = new L.Map('mapid', {
+        var mymap = L.map('map', {
             minZoom: 18,
-            maxZoom: 18
-        });
+            maxZoom: 18 
+        }).setView([47.583896, 12.173329], 18);
 
         var ign = new L.tileLayer("https://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
             subdomains: ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
@@ -42,12 +42,14 @@
 
         mymap.addLayer(ign);
 
+        var marker = L.marker([47.583896, 12.173329]).addTo(map);
+        
+        /*
         navigator.geolocation.getCurrentPosition(function (location) {
             var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
             var marker = new L.marker(latlng).addTo(mymap);
         });
-
-        //var marker = L.marker(mymap.getCenter()).addTo(mymap);
+        */
 
         function getLocation() {
                 
