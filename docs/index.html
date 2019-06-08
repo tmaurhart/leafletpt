@@ -107,7 +107,11 @@
         for (var i = 0; i < locations.length; i++) {
             markerTarget = new L.marker([locations[i][1], locations[i][2]], {
                 icon: customIcon
-            }).addTo(mymap);
+            }).on('click', markerOnClick).addTo(mymap);
+        }
+
+        function markerOnClick(e) {
+            alert(e.latlng);
         }
 
         function onLocationFound(e) {
