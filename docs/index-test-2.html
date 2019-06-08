@@ -33,11 +33,14 @@
 
     <script>
         var map = L.map('map').setView([51.5, -0.09], 9);
-        L.tileLayer('http://{s}.tile.cloudmade.com/{key}/22677/256/{z}/{x}/{y}.png', {
-            attribution: 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade. Font Awesome by Dave Gandy',
-            key: 'BC9A493B41014CAABB98F0471D759707',
-            detectRetina: true
-        }).addTo(map);
+
+        var ign = new L.tileLayer("https://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
+            subdomains: ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
+            attribution: '&copy; <a href="http://basemap.at">Basemap.at</a>, Sascha & Tom'
+        });
+
+        map.addLayer(ign);
+
         var colors = ['red', 'blue', 'green', 'purple', 'orange', 'darkred', 'darkblue', 'darkgreen', 'cadetblue', 'darkpurple'];
         var awesomeIcons = ['font', 'cloud-download', 'medkit', 'github-alt', 'coffee', 'food', 'bell-alt', 'question-sign', 'star'];
         var rndCoordinates = function (from, to, fixed) {
