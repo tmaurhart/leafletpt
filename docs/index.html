@@ -82,7 +82,7 @@
 
         mymap.addLayer(ign);
 
-        var marker = L.marker(latlng).addTo(mymap);
+        var marker = L.marker(mymap.getCenter()).addTo(mymap);
 
 
         function getLocation() {
