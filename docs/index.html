@@ -99,7 +99,7 @@
             iconUrl: 'images/custom-marker.png',
             shadowUrl: 'images/custom-marker-shadow.png',
 
-            iconSize: [38, 95], // size of the icon
+            iconSize: [32, 37], // size of the icon
             shadowSize: [50, 64], // size of the shadow
             iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
             shadowAnchor: [4, 62],  // the same for the shadow
@@ -115,7 +115,7 @@
         for (var i = 0; i < locations.length; i++) {
             marker = new L.marker([locations[i][1], locations[i][2]], {
                 icon: customIcon
-            }).bindPopup(locations[i][0]).addTo(mymap);
+            }).addTo(mymap);
         }
 
     </script>
