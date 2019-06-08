@@ -90,10 +90,7 @@
                 }
             }
             function getPosition(position) {
-                document.getElementById("location").innerHTML =
-                    "Latitude: " + position.coords.latitude + "<br>" +
-                    "Longitude: " + position.coords.longitude;
-
+                
                 mymap.setView(position.coords.latitude, position.coords.longitude, 18);
 
                 var ign = new L.tileLayer("https://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
