@@ -37,12 +37,26 @@ self.addEventListener('activate', function (e) {
 });
 
 
-self.addEventListener('fetch', function (e) {
-    e.respondWith(
-        caches.match(e.request).then(function (response) {
-            return response || fetch(e.request);
-        })
-    );
+// self.addEventListener('fetch', function (e) {
+//     e.respondWith(
+//         caches.match(e.request).then(function (response) {
+//             return response || fetch(e.request);
+//         })
+//     );
+// });
+
+self.addEventListener('fetch', function (event) {
+    let online = navigator.onLine
+    if (!online) {
+        event.respondWith(
+            caches.match(event.request).then(function (res) {
+                if (res) {
+                    return res;
+                }
+                requestBackend(event);
+            })
+        )
+    }
 });
 
 // self.addEventListener('fetch', function (event) {
