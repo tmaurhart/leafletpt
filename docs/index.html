@@ -34,6 +34,8 @@
             zoomControl: false
         }).setView([47.583896, 12.173329], 18);
 
+        mymap.setMaxBounds(map.getBounds());
+
         mymap.dragging.disable();
             mymap.touchZoom.disable();
             mymap.doubleClickZoom.disable();
