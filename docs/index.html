@@ -15,24 +15,29 @@
     <link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#2b3e51">
     <meta name="msapplication-TileColor" content="#2b3e51">
     <meta name="theme-color" content="#2b3e51">
-    
+
     <link href="css/leaflet.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
     <script src="js/leaflet.js"></script>
     <script src="js/leaflet-tilelayer-wmts.js"></script>
-    
+
 
 </head>
 
+<<<<<<< HEAD
 <body onload="getLocation();">
     
+=======
+<body onload="getPosition();">
+
+>>>>>>> a951dd35d4d60d110f73d50c07abf3455909d5d2
     <div id="mapid"></div>
-   
+
     <script>
         var mymap = L.map('mapid', {
             minZoom: 18,
-            maxZoom: 18 
+            maxZoom: 18
         }).setView([47.583896, 12.173329], 18);
 
         var ign = new L.tileLayer("https://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
@@ -43,28 +48,38 @@
         mymap.addLayer(ign);
 
         var marker = L.marker([47.583896, 12.173329]).addTo(mymap);
+<<<<<<< HEAD
+=======
+
+        /*
+        navigator.geolocation.getCurrentPosition(function (location) {
+            var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
+            var marker = new L.marker(latlng).addTo(mymap);
+        });
+        */
+>>>>>>> a951dd35d4d60d110f73d50c07abf3455909d5d2
 
         function getLocation() {
-                
+
             // Check whether browser supports Geolocation API or not
             if (navigator.geolocation) { // Supported
                 watchID = navigator.geolocation.watchPosition(function(position) {
                     getPosition(position);
                 });
-                        
+
             } else { // Not supported
                 alert("Oops! This browser does not support HTML Geolocation.");
             }
         }
 
-        function getPosition(position) {           
+        function getPosition(position) {
             var latlng = new L.LatLng(position.coords.latitude, position.coords.longitude);
             mymap.setZoom(11);
             mymap.setView(latlng, 18);
-            marker.setLatLng(latlng);        
+            marker.setLatLng(latlng);
             console.log(latlng);
         }
-        
+
         function catchError(positionError) {
             switch (positionError.code) {
                 case positionError.TIMEOUT:
@@ -113,6 +128,12 @@
 
         //mymap.on('locationfound', onLocationFound);
         //mymap.locate({ setView: true, watch: true, maxZoom: 8 });
+
+        if ('serviceWorker' in navigator) {
+                navigator.serviceWorker
+                    .register('sw.js')
+                    .then(function () { console.log("Service Worker Registered"); });
+            }
 
     </script>
 
