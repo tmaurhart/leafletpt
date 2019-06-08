@@ -70,7 +70,11 @@
 
 */
 
-        var mymap = new L.Map('mapid');
+        var mymap = new L.Map('mapid', {
+                minZoom: 18,
+                maxZoom: 18
+            });
+
 
         function getLocation() {
                 
@@ -105,9 +109,7 @@
 
                 var ign = new L.tileLayer("https://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
                     subdomains: ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
-                    attribution: '&copy; <a href="http://basemap.at">Basemap.at</a>, Sascha & Tom',
-                    maxNativeZoom: 19,
-                    maxZoom: 18
+                    attribution: '&copy; <a href="http://basemap.at">Basemap.at</a>, Sascha & Tom'
                 });
 
                 mymap.addLayer(ign);
