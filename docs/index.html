@@ -82,7 +82,12 @@
                     }
 
                     navigator.geolocation.getCurrentPosition(getPosition, catchError, positionOptions);
-                    // watchID = navigator.geolocation.watchPosition(getPosition, catchError, positionOptions);
+                    
+                    watchID = navigator.geolocation.watchPosition(function(position) {
+                        getPosition();
+                    });
+                        
+                    //getPosition, catchError, positionOptions);
 
 
                 } else { // Not supported
