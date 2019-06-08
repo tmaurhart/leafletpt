@@ -38,10 +38,8 @@
 
         function showPosition(position) {
             latlon = position.coords.latitude + "," + position.coords.longitude;
-            
-        }
-
-        var mymap = L.map('mapid').setView([latlon], 13);
+        
+            var mymap = L.map('mapid').setView([latlon], 13);
         /* Init Map */
         //var mymap = L.map('mapid').setView([47.58333, 12.16667], 13);
         /*L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -58,6 +56,7 @@
         });
 
         mymap.addLayer(ign);
+    }
 
         /* Build Marker */
         var marker = L.marker([47.5839578, 12.1733215]).addTo(mymap);
