@@ -17,15 +17,16 @@
 
 </head>
 
-<body>
+<body onload="init();">
     
     <div id="mapid"></div>
     <div id="demo"></div>
     <button onclick="getLocation()">Try It</button>
 
     <script>
-        var x = document.getElementById("demo");
-            function getLocation() {
+        var mymap = L.map('mapid').setView([47.58333, 12.16667], 13);
+
+        function init() {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(showPosition);
                 } else {
@@ -33,14 +34,13 @@
                 }
             }
 
-            function showPosition(position) {
-                x.innerHTML = "Latitude: " + position.coords.latitude +
-                    "<br>Longitude: " + position.coords.longitude;
-            }
+        function showPosition(position) {
+            var latlon = position.coords.latitude + "," + position.coords.longitude;
+            var mymap = L.map('mapid').setView([latlon], 13);
+        }
 
-        //var L = window.L;
         /* Init Map */
-        var mymap = L.map('mapid').setView([47.58333, 12.16667], 13);
+        //var mymap = L.map('mapid').setView([47.58333, 12.16667], 13);
         /*L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             maxZoom: 18,
