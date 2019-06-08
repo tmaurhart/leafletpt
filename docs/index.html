@@ -23,7 +23,8 @@
     <div id="debug"></div>
     
     <script>
-        var mymap;
+        //var mymap;
+        //var mymap = L.map('mapid').setView([47.58333, 12.16667], 13);
         var x = document.getElementById("debug");
 
         function init() {
@@ -36,9 +37,10 @@
 
         function showPosition(position) {
             var latlon = position.coords.latitude + "," + position.coords.longitude;
-            mymap = L.map('mapid').setView([latlon], 13);
+            
         }
 
+        var mymap = L.map('mapid').setView([latlon], 13);
         /* Init Map */
         //var mymap = L.map('mapid').setView([47.58333, 12.16667], 13);
         /*L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
