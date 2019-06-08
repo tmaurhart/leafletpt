@@ -4,7 +4,7 @@ self.addEventListener('install', function (e) {
         caches.open(swCache)
             .then(function (cache) {
                 return cache.addAll([
-                    '/',
+                    '/leafletpt/',
                     'index.html',
                     'css/leaflet.css',
                     'css/style.css',
