@@ -75,6 +75,15 @@
                 maxZoom: 18
             });
 
+        var ign = new L.tileLayer("https://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
+                subdomains: ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
+                attribution: '&copy; <a href="http://basemap.at">Basemap.at</a>, Sascha & Tom'
+            });
+
+        mymap.addLayer(ign);
+
+        var marker = L.marker(latlng).addTo(mymap);
+
 
         function getLocation() {
                 
@@ -107,13 +116,10 @@
                 mymap.setZoom(11);
                 mymap.setView(latlng, 18);
 
-                var ign = new L.tileLayer("https://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
-                    subdomains: ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
-                    attribution: '&copy; <a href="http://basemap.at">Basemap.at</a>, Sascha & Tom'
-                });
+                marker.setLatLng(latlng);
 
-                mymap.addLayer(ign);
-                var marker = L.marker(latlng).addTo(mymap);
+                
+                
 
                 console.log(latlng);
             }
