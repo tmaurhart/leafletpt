@@ -92,7 +92,9 @@
             function getPosition(position) {
                 
                 var mymap = new L.Map('mapid');
-                mymap.setView(position.coords.latitude, position.coords.longitude, 18);
+                var latlng = new L.LatLng(position.coords.latitude, position.coords.longitude);
+                mymap.setZoom(11);
+                mymap.setView(latlng, 18);
 
                 var ign = new L.tileLayer("https://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
                     subdomains: ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
