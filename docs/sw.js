@@ -46,17 +46,16 @@ self.addEventListener('activate', function (e) {
 // });
 
 self.addEventListener('fetch', function (event) {
-    let online = navigator.onLine
-    if (!online) {
-        event.respondWith(
-            caches.match(event.request).then(function (res) {
-                if (res) {
-                    return res;
-                }
-                requestBackend(event);
-            })
-        )
-    }
+    event.respondWith(
+        caches.open(swCache).then(function (cache) {
+            return cache.match(event.request).then(function (response) {
+                return response || fetch(event.request).then(function (response) {
+                    cache.put(event.request, response.clone());
+                    return response;
+                });
+            });
+        })
+    );
 });
 
 // self.addEventListener('fetch', function (event) {
