@@ -20,19 +20,19 @@
 <body onload="init();">
     
     <div id="mapid"></div>
-    <div id="demo"></div>
-    <button onclick="getLocation()">Try It</button>
-
+    <div id="debug"></div>
+    
     <script>
-        var mymap;
+        var mymap = mymap;
+        var x = document.getElementById("demo");
 
         function init() {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(showPosition);
-                } else {
-                    x.innerHTML = "Geolocation is not supported by this browser.";
-                }
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
             }
+        }
 
         function showPosition(position) {
             var latlon = position.coords.latitude + "," + position.coords.longitude;
