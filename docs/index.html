@@ -30,55 +30,15 @@
     <div id="mapid"></div>
    
     <script>
-        
-
-        /*Geolocation.watchPosition().subscribe((position) => {
-                this.x = position.coords.longitude;
-                this.y = position.coords.latitude;*/
-
-        //navigator.geolocation.getCurrentPosition(function (location) {
-        
-        /*    navigator.geolocation.watchPosition(function (location) {
-            var mymap = new L.Map('mapid');
-            mymap.setZoom(11);
-            var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
-
-            var positionOptions = {
-                timeout: Infinity,
-                maximumAge: 0,
-                enableHighAccuracy: true
-            }
-
-            //var mymap = L.map('mapid').setView(latlng, 13);
-            mymap.setView(latlng, 18);
-
-            
-
-
-
-            var ign = new L.tileLayer("https://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
-                subdomains: ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
-                attribution: '&copy; <a href="http://basemap.at">Basemap.at</a>, Sascha & Tom',
-                maxNativeZoom: 19,
-                maxZoom: 18
-            });
-
-            mymap.addLayer(ign);
-
-            var marker = L.marker(latlng).addTo(mymap);
-        }, positionOptions);
-
-*/
-
         var mymap = new L.Map('mapid', {
-                minZoom: 18,
-                maxZoom: 18
-            });
+            minZoom: 18,
+            maxZoom: 18
+        });
 
         var ign = new L.tileLayer("https://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
-                subdomains: ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
-                attribution: '&copy; <a href="http://basemap.at">Basemap.at</a>, Sascha & Tom'
-            });
+            subdomains: ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
+            attribution: '&copy; <a href="http://basemap.at">Basemap.at</a>, Sascha & Tom'
+        });
 
         mymap.addLayer(ign);
 
@@ -88,7 +48,6 @@
         });
 
         //var marker = L.marker(mymap.getCenter()).addTo(mymap);
-
 
         function getLocation() {
                 
@@ -101,31 +60,21 @@
                         enableHighAccuracy: true
                     }
 
-                   // navigator.geolocation.getCurrentPosition(getPosition, catchError, positionOptions);
-                    
                     watchID = navigator.geolocation.watchPosition(function(position) {
-                        getPosition();
+                        getPosition(position);
                     });
                         
-                    //getPosition, catchError, positionOptions);
-
-
                 } else { // Not supported
                     alert("Oops! This browser does not support HTML Geolocation.");
                 }
             }
-            function getPosition(position) {
-           
+
+            function getPosition(position) {           
                 
                 var latlng = new L.LatLng(position.coords.latitude, position.coords.longitude);
                 mymap.setZoom(11);
                 mymap.setView(latlng, 18);
-
-                marker.setLatLng(latlng);
-
-                
-                
-
+                marker.setLatLng(latlng);        
                 console.log(latlng);
             }
 
