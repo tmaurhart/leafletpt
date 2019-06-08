@@ -23,7 +23,7 @@
     <div id="debug"></div>
     
     <script>
-        var mymap = L.map('mapid');
+        var mymap;
         var x = document.getElementById("debug");
 
         function init() {
@@ -36,7 +36,7 @@
 
         function showPosition(position) {
             var latlon = position.coords.latitude + "," + position.coords.longitude;
-            var mymap = L.map('mapid').setView([latlon], 13);
+            mymap = L.map('mapid').setView([latlon], 13);
         }
 
         /* Init Map */
