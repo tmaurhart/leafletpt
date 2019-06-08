@@ -25,7 +25,7 @@
 
 </head>
 
-<body>
+<body onload="getLocation();">
     
     <div id="mapid"></div>
     <div id="debug"></div>
@@ -38,7 +38,8 @@
                 this.y = position.coords.latitude;*/
 
         //navigator.geolocation.getCurrentPosition(function (location) {
-        navigator.geolocation.watchPosition(function (location) {
+        
+        /*    navigator.geolocation.watchPosition(function (location) {
             var mymap = new L.Map('mapid');
             mymap.setZoom(11);
             var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
@@ -52,21 +53,9 @@
             //var mymap = L.map('mapid').setView(latlng, 13);
             mymap.setView(latlng, 18);
 
-            /*L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                maxZoom: 18,
-                id: 'mapbox.streets',
-                accessToken: 'pk.eyJ1IjoidG1hdXJoYXJ0IiwiYSI6ImNqd245anpudzBiemE0NG53NnUxbTU2ZW0ifQ.ynEQUwdgBGAE9BQOzuz5HQ'
-            }).addTo(mymap);*/
+            
 
-            //http://{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png
 
-            /*L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://mapbox.com">Mapbox</a>',
-                maxZoom: 18,
-                id: 'mapbox.streets',
-                accessToken: 'pk.eyJ1IjoiYmJyb29rMTU0IiwiYSI6ImNpcXN3dnJrdDAwMGNmd250bjhvZXpnbWsifQ.Nf9Zkfchos577IanoKMoYQ'
-            }).addTo(mymap);*/
 
             var ign = new L.tileLayer("https://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
                 subdomains: ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
@@ -79,6 +68,60 @@
 
             var marker = L.marker(latlng).addTo(mymap);
         }, positionOptions);
+
+*/
+
+        function getLocation() {
+                // Check whether browser supports Geolocation API or not
+                if (navigator.geolocation) { // Supported
+
+                    var positionOptions = {
+                        timeout: Infinity,
+                        maximumAge: 0,
+                        enableHighAccuracy: true
+                    }
+
+                    navigator.geolocation.getCurrentPosition(getPosition, catchError, positionOptions);
+                    // watchID = navigator.geolocation.watchPosition(getPosition, catchError, positionOptions);
+
+
+                } else { // Not supported
+                    alert("Oops! This browser does not support HTML Geolocation.");
+                }
+            }
+            function getPosition(position) {
+                document.getElementById("location").innerHTML =
+                    "Latitude: " + position.coords.latitude + "<br>" +
+                    "Longitude: " + position.coords.longitude;
+
+                mymap.setView(position.coords.latitude, position.coords.longitude, 18);
+
+                var ign = new L.tileLayer("https://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
+                    subdomains: ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
+                    attribution: '&copy; <a href="http://basemap.at">Basemap.at</a>, Sascha & Tom',
+                    maxNativeZoom: 19,
+                    maxZoom: 18
+                });
+
+                mymap.addLayer(ign);
+                var marker = L.marker(latlng).addTo(mymap);
+            }
+
+            function catchError(positionError) {
+                switch (positionError.code) {
+                    case positionError.TIMEOUT:
+                        alert("The request to get user location has aborted as it has taken too long.");
+                        break;
+                    case positionError.POSITION_UNAVAILABLE:
+                        alert("Location information is not available.");
+                        break;
+                    case positionError.PERMISSION_DENIED:
+                        alert("Permission to share location information has been denied!");
+                        break;
+                    default:
+                        alert("An unknown error occurred.");
+                }
+            }
 
 
 
