@@ -63,8 +63,10 @@
             }
         }
 
+        var latlng;
+
         function getPosition(position) {
-            var latlng = new L.LatLng(position.coords.latitude, position.coords.longitude);
+            latlng = new L.LatLng(position.coords.latitude, position.coords.longitude);
             mymap.setZoom(11);
             mymap.setView(latlng, 18);
             marker.setLatLng(latlng);
@@ -108,10 +110,25 @@
             markerTarget = new L.marker([locations[i][1], locations[i][2]], {
                 icon: customIcon
             }).on('click', markerOnClick).addTo(mymap);
+            markerTarget.bindPopup('test');
         }
 
         function markerOnClick(e) {
-            alert(e.latlng);
+            //alert(e.latlng);
+            var minDist = 5
+            var dist1 = mymap.distance(latlng, e.latlng);
+            // e.layer.openPopup();
+            e.openPopup();
+            if (dist1 <= minDist) {
+                console.log('reached');
+
+                // e.bindPopup('reached');
+            } else {
+                //e.bindPopup(dist1)
+                console.log(dist1);
+                //e.openPopup();
+                // e.bindPopup(dist1);
+            }
         }
 
         function onLocationFound(e) {
@@ -124,11 +141,11 @@
         //mymap.on('locationfound', onLocationFound);
         //mymap.locate({ setView: true, watch: true, maxZoom: 8 });
 
-        if ('serviceWorker' in navigator) {
-                navigator.serviceWorker
-                    .register('sw.js')
-                    .then(function () { console.log("Service Worker Registered"); });
-            }
+        // if ('serviceWorker' in navigator) {
+        //         navigator.serviceWorker
+        //             .register('sw.js')
+        //             .then(function () { console.log("Service Worker Registered"); });
+        //     }
 
     </script>
 
