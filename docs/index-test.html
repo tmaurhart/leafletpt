@@ -120,7 +120,7 @@
             var nearDistancePoints = [];
             var nearDistanceMarkers = [];
             var walkingDistance = 5000;
-            var nearDistance = 10;
+            var nearDistance = 100;
             var startWalkDistance;
             var firstTime = true;
 
@@ -132,6 +132,8 @@
                         walkDistancePoints[j] = allPoints[i];
                         j++;
                     }
+
+      
                 }
                 if (walkDistancePoints.length > 0) {
                     startWalkDistance = latlng;
