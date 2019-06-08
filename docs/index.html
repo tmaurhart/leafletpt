@@ -25,6 +25,7 @@
     <script>
         //var mymap;
         //var mymap = L.map('mapid').setView([47.58333, 12.16667], 13);
+        var latlon;
         var x = document.getElementById("debug");
 
         function init() {
@@ -36,7 +37,7 @@
         }
 
         function showPosition(position) {
-            var latlon = position.coords.latitude + "," + position.coords.longitude;
+            latlon = position.coords.latitude + "," + position.coords.longitude;
             
         }
 
