@@ -37,24 +37,21 @@
 
         map.addLayer(ign);
 
+        var rndCoordinates = function (from, to, fixed) {
+            return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
+        };
 
-            var lat, lng;
-            var thousands = [];
+        for (var i = 0; i <= 100; i++) {
+            //var color = colors[Math.floor(Math.random() * colors.length)];
+            //var awesomeIcon = awesomeIcons[Math.floor(Math.random() * awesomeIcons.length)];
+            var geo = [rndCoordinates(51.3, 51.8, 3), rndCoordinates(0.3, -0.4, 3)];
+            L.marker(geo, { icon: L.AwesomeMarkers.icon({ icon: awesomeIcon, color: color }) }).addTo(map);
 
-      
-
-            for (var i = 0; i < 5; i++) {
-                lat = Math.floor(Math.random() * 88) + 1;
-                lat *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
-
-                lng = Math.floor(Math.random() * 88) + 1;
-                lng *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
-
-                marker = new L.marker([lat, lng]);
-                marker.addTo(map);
+            L.marker(geo).addTo(map);
+        }
 
 
-            }
+            
     </script>
 
 </body>
