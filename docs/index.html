@@ -95,7 +95,7 @@
                 }
             }
             function getPosition(position) {
-                
+           
                 var mymap = new L.Map('mapid');
                 var latlng = new L.LatLng(position.coords.latitude, position.coords.longitude);
                 mymap.setZoom(11);
@@ -110,6 +110,8 @@
 
                 mymap.addLayer(ign);
                 var marker = L.marker(latlng).addTo(mymap);
+
+                console.log(latlng);
             }
 
             function catchError(positionError) {
