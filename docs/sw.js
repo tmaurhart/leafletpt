@@ -6,15 +6,15 @@ self.addEventListener('install', function (e) {
                 return cache.addAll([
                     '/leafletpt/',
                     'index.html',
-                    'css/leaflet.css',
-                    'css/style.css',
-                    'js/leaflet.js',
-                    'images/layers-2x.png',
-                    'images/layers.png',
-                    'images/marker-icon-2x.png',
-                    'images/marker-icon.png',
-                    'images/marker-shadow.png',
-                    'leaflet-tilelayer-wmts.js',
+                    // 'css/leaflet.css',
+                    // 'css/style.css',
+                    // 'js/leaflet.js',
+                    // 'images/layers-2x.png',
+                    // 'images/layers.png',
+                    // 'images/marker-icon-2x.png',
+                    // 'images/marker-icon.png',
+                    // 'images/marker-shadow.png',
+                    // 'leaflet-tilelayer-wmts.js',
                     'manifest.webmanifest'
                 ]);
             })
