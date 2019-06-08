@@ -30,7 +30,7 @@
     <div id="mapid"></div>
    
     <script>
-        var mymap = L.map('map', {
+        var mymap = L.map('mapid', {
             minZoom: 18,
             maxZoom: 18 
         }).setView([47.583896, 12.173329], 18);
@@ -42,7 +42,7 @@
 
         mymap.addLayer(ign);
 
-        var marker = L.marker([47.583896, 12.173329]).addTo(map);
+        var marker = L.marker([47.583896, 12.173329]).addTo(mymap);
         
         /*
         navigator.geolocation.getCurrentPosition(function (location) {
