@@ -71,7 +71,7 @@
 */
 
         var mymap = new L.Map('mapid');
-        
+
         function getLocation() {
                 
             // Check whether browser supports Geolocation API or not
@@ -83,7 +83,7 @@
                         enableHighAccuracy: true
                     }
 
-                    navigator.geolocation.getCurrentPosition(getPosition, catchError, positionOptions);
+                   // navigator.geolocation.getCurrentPosition(getPosition, catchError, positionOptions);
                     
                     watchID = navigator.geolocation.watchPosition(function(position) {
                         getPosition();
