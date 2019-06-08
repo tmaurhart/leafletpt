@@ -24,14 +24,7 @@
 
 
 </head>
-
-<<<<<<< HEAD
 <body onload="getLocation();">
-    
-=======
-<body onload="getPosition();">
-
->>>>>>> a951dd35d4d60d110f73d50c07abf3455909d5d2
     <div id="mapid"></div>
 
     <script>
@@ -48,16 +41,6 @@
         mymap.addLayer(ign);
 
         var marker = L.marker([47.583896, 12.173329]).addTo(mymap);
-<<<<<<< HEAD
-=======
-
-        /*
-        navigator.geolocation.getCurrentPosition(function (location) {
-            var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
-            var marker = new L.marker(latlng).addTo(mymap);
-        });
-        */
->>>>>>> a951dd35d4d60d110f73d50c07abf3455909d5d2
 
         function getLocation() {
 
