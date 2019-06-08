@@ -43,6 +43,12 @@
             mymap.setZoom(11);
             var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
 
+            var positionOptions = {
+                timeout: Infinity,
+                maximumAge: 0,
+                enableHighAccuracy: true
+            }
+
             //var mymap = L.map('mapid').setView(latlng, 13);
             mymap.setView(latlng, 18);
 
@@ -72,7 +78,7 @@
             mymap.addLayer(ign);
 
             var marker = L.marker(latlng).addTo(mymap);
-        });
+        }, positionOptions);
 
 
 
