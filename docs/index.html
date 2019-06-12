@@ -110,25 +110,21 @@
             markerTarget = new L.marker([locations[i][1], locations[i][2]], {
                 icon: customIcon
             }).on('click', markerOnClick).addTo(mymap);
-            markerTarget.bindPopup('test');
+            markerTarget.bindPopup('');
         }
 
         function markerOnClick(e) {
             //alert(e.latlng);
             var minDist = 5
-            var dist1 = mymap.distance(latlng, e.latlng);
-            // e.layer.openPopup();
-            e.openPopup();
-            if (dist1 <= minDist) {
-                console.log('reached');
+            var distance = Math.floor(mymap.distance(latlng, e.latlng));
+            let pop = e.target.getPopup();
 
-                // e.bindPopup('reached');
+            if (distance <= minDist) {
+                pop.setContent('Point reached');
             } else {
-                //e.bindPopup(dist1)
-                console.log(dist1);
-                //e.openPopup();
-                // e.bindPopup(dist1);
+                pop.setContent(`Distance: ${distance} meters`);
             }
+            pop.openPopup();
         }
 
         function onLocationFound(e) {
