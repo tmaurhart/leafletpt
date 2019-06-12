@@ -1,4 +1,6 @@
-
-#mapid { 
-    height: 90vh;
+body {
+    margin: 0;
+}
+#mapid {
+    height: 100vh;
 }

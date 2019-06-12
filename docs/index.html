@@ -47,7 +47,7 @@
         });
 
         mymap.addLayer(ign);
-
+        var marker = mymap.locate();
         var marker = L.marker([47.583896, 12.173329]).addTo(mymap);
 
         function getLocation() {
