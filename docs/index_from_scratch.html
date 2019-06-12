@@ -50,8 +50,8 @@
         // init the map
         let map = L.map('mapid').fitWorld();
         map.zoomControl.remove();
-        // add the layer
 
+        // add the layer
         // Austrian basemap but used mapbox below for now for worldview
         // L.tileLayer("https://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
         //     subdomains: ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
@@ -123,17 +123,16 @@
             pop.setContent(`Distance: ${distance} meters`).openPopup();
         }
 
-        // update the current Position Marker on the map
+        // update the current position marker on the map
         function updateCurrentMarkerPosition(currentPostion) {
             let latlng = new L.LatLng(currentPostion.coords.latitude, currentPostion.coords.longitude);
             map.setView(latlng, 18);
             currentPositionMarker.setLatLng(latlng);
-            console.log(latlng);
             checkOnTargets(latlng);
         }
 
         // check if we are close to a target
-        // if yes, let's just remove it
+        // if yes, let's just remove it for now
         function checkOnTargets(latlng) {
             for(let i = 0; i < targets.length; i++) {
                 let distance = Math.floor(map.distance(latlng, targets[i].getLatLng()));
