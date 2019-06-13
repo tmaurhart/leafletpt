@@ -18,6 +18,15 @@
 
     <link href="css/leaflet.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <style>
+    .redMarker {
+        background: red;
+        border-radius: 50%;
+    }
+    .greenMarker {
+        background: green;
+    }
+    </style>
 
     <script src="js/leaflet.js"></script>
     <script src="js/leaflet-tilelayer-wmts.js"></script>
@@ -46,6 +55,7 @@
             shadowAnchor: [14, 41],
             popupAnchor: [0, -32]
         });
+        let cssIcon = L.divIcon({ className: 'redMarker' });
 
         // init the map
         let map = L.map('mapid').fitWorld();
@@ -81,10 +91,10 @@
             currentPostion = e.latlng;
             map.setMaxBounds(map.getBounds());
 
-            // put 5 random positions within the map bound and add to targets array
+            // put 5 random positions / targets within the map bound and add to targets array
             for (let i = 0; i < 5; i++) {
                 targets[i] = new L.marker(getRandomLatLng(map), {
-                    icon: customIcon
+                    icon: cssIcon
                 }).on('click', targetOnClick).addTo(map);
                 targets[i].bindPopup('', { autoPan: false, keepInView: true });
             }
@@ -134,13 +144,28 @@
         // check if we are close to a target
         // if yes, let's just remove it for now
         function checkOnTargets(latlng) {
+            let targetsToRemove = '';
             for(let i = 0; i < targets.length; i++) {
                 let distance = Math.floor(map.distance(latlng, targets[i].getLatLng()));
                 if (distance <= minDistanceToMarker) {
-                    map.removeLayer(targets[i]);
+                    targetsToRemove += i + ',';
                 }
             }
+            if(targetsToRemove != '') {
+                updateTargets(targetsToRemove);
+            }
+        }
 
+        function updateTargets(targetsToRemove) {
+            let removeTargets = targetsToRemove.substring(0, targetsToRemove.length - 1);
+            removeTargets = removeTargets.split(',');
+            console.log(removeTargets);
+            for (let i = 0; i < removeTargets.length; i++) {
+                targets[removeTargets[i]].getElement().style.background = 'green';
+            }
+            for (let i = removeTargets.length - 1; i >= 0; i--) {
+                targets.splice(removeTargets[i], 1);
+            }
         }
 
     </script>
