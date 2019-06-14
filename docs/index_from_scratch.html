@@ -56,7 +56,11 @@
 
         // init the map
         let map = L.map('mapid').fitWorld();
+
         map.zoomControl.remove();
+        map.touchZoom.disable();
+        map.doubleClickZoom.disable();
+        map.scrollWheelZoom.disable();
 
         // add the layer
         // Austrian basemap but used mapbox below for now for worldview
