@@ -19,13 +19,10 @@
     <link href="css/leaflet.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <style>
-    .redMarker {
-        background: red;
-        border-radius: 50%;
-    }
-    .greenMarker {
-        background: green;
-    }
+        .redMarker {
+            background: red;
+            border-radius: 50%;
+        }
     </style>
 
     <script src="js/leaflet.js"></script>
@@ -45,16 +42,16 @@
         let minDistanceToMarker = 50; // in metres - change to 10 or so for live
 
         // icons for random locations
-        let icon = L.Icon.Default.imagePath = 'images/';
-        let customIcon = L.icon({
-            iconUrl: L.Icon.Default.imagePath + 'marker-point-red-icon.png',
-            shadowUrl: L.Icon.Default.imagePath + 'marker-point-shadow.png',
-            iconSize: [24, 32],
-            shadowSize: [41, 41],
-            iconAnchor: [12, 32],
-            shadowAnchor: [14, 41],
-            popupAnchor: [0, -32]
-        });
+        // let icon = L.Icon.Default.imagePath = 'images/';
+        // let customIcon = L.icon({
+        //     iconUrl: L.Icon.Default.imagePath + 'marker-point-red-icon.png',
+        //     shadowUrl: L.Icon.Default.imagePath + 'marker-point-shadow.png',
+        //     iconSize: [24, 32],
+        //     shadowSize: [41, 41],
+        //     iconAnchor: [12, 32],
+        //     shadowAnchor: [14, 41],
+        //     popupAnchor: [0, -32]
+        // });
         let cssIcon = L.divIcon({ className: 'redMarker' });
 
         // init the map
@@ -145,24 +142,22 @@
         // if yes, let's just remove it for now
         function checkOnTargets(latlng) {
             let targetsToRemove = '';
-            for(let i = 0; i < targets.length; i++) {
+            for (let i = 0; i < targets.length; i++) {
                 let distance = Math.floor(map.distance(latlng, targets[i].getLatLng()));
                 if (distance <= minDistanceToMarker) {
+                    targets[i].getElement().style.background = 'green';
                     targetsToRemove += i + ',';
                 }
             }
-            if(targetsToRemove != '') {
+            if (targetsToRemove != '') {
                 updateTargets(targetsToRemove);
             }
         }
 
+        // Remove reached targets from the targets array
         function updateTargets(targetsToRemove) {
             let removeTargets = targetsToRemove.substring(0, targetsToRemove.length - 1);
             removeTargets = removeTargets.split(',');
-            console.log(removeTargets);
-            for (let i = 0; i < removeTargets.length; i++) {
-                targets[removeTargets[i]].getElement().style.background = 'green';
-            }
             for (let i = removeTargets.length - 1; i >= 0; i--) {
                 targets.splice(removeTargets[i], 1);
             }
