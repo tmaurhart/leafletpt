@@ -55,7 +55,7 @@
         let cssIcon = L.divIcon({ className: 'redMarker' });
 
         // init the map
-        let map = L.map('mapid').fitWorld();
+        let map = L.map('mapid').setView([52.520007, 13.404954], 18);
 
         map.zoomControl.remove();
         map.touchZoom.disable();
