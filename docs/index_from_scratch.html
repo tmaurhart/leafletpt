@@ -32,18 +32,7 @@
         let targets = [];
         let minDistanceToMarker = 20; // in metres - change to 10 or so for live
 
-        // icons for random locations
-        // let icon = L.Icon.Default.imagePath = 'images/';
-        // let customIcon = L.icon({
-        //     iconUrl: L.Icon.Default.imagePath + 'marker-point-red-icon.png',
-        //     shadowUrl: L.Icon.Default.imagePath + 'marker-point-shadow.png',
-        //     iconSize: [24, 32],
-        //     shadowSize: [41, 41],
-        //     iconAnchor: [12, 32],
-        //     shadowAnchor: [14, 41],
-        //     popupAnchor: [0, -32]
-        // });
-        let cssIcon = L.divIcon({ className: 'redMarker' });
+        let cssIcon = L.divIcon({ className: 'redMarker', iconSize: [20,20] });
 
         // init the map
         let map = L.map('mapid', {
