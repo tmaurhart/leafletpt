@@ -4,10 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Leaflet - Prototype</title>
-    <meta name="author" content="Sascha Popp, Thomas Maurhart">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
     <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
@@ -22,126 +20,144 @@
     <script src="js/leaflet.js"></script>
     <script src="js/leaflet-tilelayer-wmts.js"></script>
 
-
 </head>
-<body onload="getLocation();">
+
+<body>
     <div id="mapid"></div>
 
     <script>
-        var mymap = L.map('mapid', {
+        // settings
+        let currentPositionMarker;
+        let currentPostion;
+        let targets = [];
+        let minDistanceToMarker = 20; // in metres - change to 10 or so for live
+
+        let cssIcon = L.divIcon({ className: 'redMarker', iconSize: [20,20] });
+
+        // init the map
+        let map = L.map('mapid', {
             minZoom: 18,
             maxZoom: 18,
             zoomControl: false
-        }).setView([47.583896, 12.173329], 18);
+        }).setView([52.520007, 13.404954], 18);
 
-        mymap.setMaxBounds(mymap.getBounds());
+        //map.zoomControl.remove();
+        map.touchZoom.disable();
+        map.doubleClickZoom.disable();
+        map.scrollWheelZoom.disable();
 
-        //mymap.dragging.disable();
-            mymap.touchZoom.disable();
-            mymap.doubleClickZoom.disable();
-            mymap.scrollWheelZoom.disable();
+        // add the layer
+        // Austrian basemap but used mapbox below for now for worldview
+        // L.tileLayer("https://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
+        //     subdomains: ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
+        //     attribution: '&copy; <a href="http://basemap.at">Basemap.at</a>, Paula, Emanuel, Guni, Tom',
+        //     minZoom: 18,
+        //     maxZoom: 18,
+        //     zoomControl: false
+        // }).addTo(map);
 
-        var ign = new L.tileLayer("https://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
-            subdomains: ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
-            attribution: '&copy; <a href="http://basemap.at">Basemap.at</a>, Sascha & Tom'
-        });
+        // Mapbox Street Map
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZ3VuaGFydGgiLCJhIjoiY2p3dG5pdDI5MDFmMDQzbzRlZ2RkMXN0diJ9.cu5CtQ7YyINFsEOya5c8Bg', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            // minZoom: 18,
+            // maxZoom: 18,
+            // zoomControl: false
+            id: 'mapbox.streets',
+            accessToken: 'pk.eyJ1IjoiZ3VuaGFydGgiLCJhIjoiY2p3dG5pdDI5MDFmMDQzbzRlZ2RkMXN0diJ9.cu5CtQ7YyINFsEOya5c8Bg'
+        }).addTo(map);
 
-        mymap.addLayer(ign);
-        var marker = mymap.locate();
-        var marker = L.marker([47.583896, 12.173329]).addTo(mymap);
+        // geolocation
+        map.locate({ setView: true });
+        map.on('locationfound', onLocationFound);
+        map.on('locationerror', onLocationError);
 
-        function getLocation() {
+        // geolocation success
+        function onLocationFound(e) {
+            let radius = e.accuracy;
+            currentPositionMarker = L.marker(e.latlng).addTo(map);
+            currentPostion = e.latlng;
+            map.setMaxBounds(map.getBounds());
 
-            // Check whether browser supports Geolocation API or not
-            if (navigator.geolocation) { // Supported
-                watchID = navigator.geolocation.watchPosition(function(position) {
-                    getPosition(position);
+            // put 5 random positions / targets within the map bound and add to targets array
+            for (let i = 0; i < 5; i++) {
+                targets[i] = new L.marker(getRandomLatLng(map), {
+                    icon: cssIcon
+                }).on('click', targetOnClick).addTo(map);
+                targets[i].bindPopup('', { autoPan: false, keepInView: true });
+            }
+
+            // geolocation watcher
+            if (navigator.geolocation) {
+                watchID = navigator.geolocation.watchPosition(function (position) {
+                    updateCurrentMarkerPosition(position);
                 });
-
             } else { // Not supported
                 alert("Oops! This browser does not support HTML Geolocation.");
             }
         }
 
-        var latlng;
-
-        function getPosition(position) {
-            latlng = new L.LatLng(position.coords.latitude, position.coords.longitude);
-            mymap.setZoom(11);
-            mymap.setView(latlng, 18);
-            marker.setLatLng(latlng);
-            console.log(latlng);
+        // geolocation error
+        function onLocationError(e) {
+            alert(e.message);
         }
 
-        function catchError(positionError) {
-            switch (positionError.code) {
-                case positionError.TIMEOUT:
-                    alert("The request to get user location has aborted as it has taken too long.");
-                    break;
-                case positionError.POSITION_UNAVAILABLE:
-                    alert("Location information is not available.");
-                    break;
-                case positionError.PERMISSION_DENIED:
-                    alert("Permission to share location information has been denied!");
-                    break;
-                default:
-                    alert("An unknown error occurred.");
-            }
+        // generate a random location within the map bounds
+        function getRandomLatLng(map) {
+            let bounds = map.getBounds().pad(-0.15),
+                southWest = bounds.getSouthWest(),
+                northEast = bounds.getNorthEast(),
+                lngSpan = northEast.lng - southWest.lng,
+                latSpan = northEast.lat - southWest.lat;
+            return new L.LatLng(
+                southWest.lat + latSpan * Math.random(),
+                southWest.lng + lngSpan * Math.random());
         }
 
-        var icon = L.Icon.Default.imagePath = 'images/';
-        var customIcon = L.icon({
-            iconUrl: L.Icon.Default.imagePath + 'marker-point-red-icon.png',
-            shadowUrl: L.Icon.Default.imagePath + 'marker-point-shadow.png',
-            iconSize: [24, 32],
-            shadowSize: [41, 41],
-            iconAnchor: [12, 32],
-            shadowAnchor: [14, 41],
-            popupAnchor: [0, -32]
-        });
-
-        var locations = [
-            ["LOCATION_1", 47.58415734, 12.17140172],
-            ["LOCATION_2", 47.58354222, 12.1716553],
-            ["LOCATION_3", 47.58342643, 12.17369378]
-        ];
-
-        for (var i = 0; i < locations.length; i++) {
-            markerTarget = new L.marker([locations[i][1], locations[i][2]], {
-                icon: customIcon
-            }).on('click', markerOnClick).addTo(mymap);
-            markerTarget.bindPopup('');
-        }
-
-        function markerOnClick(e) {
-            //alert(e.latlng);
-            var minDist = 5
-            var distance = Math.floor(mymap.distance(latlng, e.latlng));
+        // Click on target
+        function targetOnClick(e) {
+            let distance = Math.floor(map.distance(currentPostion, e.latlng));
             let pop = e.target.getPopup();
+            pop.setContent(`Distance: ${distance} meters`).openPopup();
+        }
 
-            if (distance <= minDist) {
-                pop.setContent('Point reached');
-            } else {
-                pop.setContent(`Distance: ${distance} meters`);
+        // update the current position marker on the map
+        function updateCurrentMarkerPosition(currentPostion) {
+            let latlng = new L.LatLng(currentPostion.coords.latitude, currentPostion.coords.longitude);
+            map.setView(latlng, 18);
+            currentPositionMarker.setLatLng(latlng);
+            checkOnTargets(latlng);
+        }
+
+        // check if we are close to a target
+        // if yes, let's just remove it for now
+        function checkOnTargets(latlng) {
+            let targetsToRemove = '';
+            for (let i = 0; i < targets.length; i++) {
+                let distance = Math.floor(map.distance(latlng, targets[i].getLatLng()));
+                if (distance <= minDistanceToMarker) {
+                    targets[i].getElement().style.background = 'green';
+                    targetsToRemove += i + ',';
+                }
             }
-            pop.openPopup();
+            if (targetsToRemove != '') {
+                updateTargets(targetsToRemove);
+            }
         }
 
-        function onLocationFound(e) {
-            var radius = e.accuracy / 2;
-            L.marker(e.latlng).addTo(mymap)
-                .bindPopup("You are within " + radius + " meters from this point").openPopup();
-            L.circle(e.latlng, radius).addTo(mymap);
+        // Remove reached targets from the targets array
+        function updateTargets(targetsToRemove) {
+            let removeTargets = targetsToRemove.substring(0, targetsToRemove.length - 1);
+            removeTargets = removeTargets.split(',');
+            for (let i = removeTargets.length - 1; i >= 0; i--) {
+                targets.splice(removeTargets[i], 1);
+            }
         }
 
-        //mymap.on('locationfound', onLocationFound);
-        //mymap.locate({ setView: true, watch: true, maxZoom: 8 });
-
-        // if ('serviceWorker' in navigator) {
-        //         navigator.serviceWorker
-        //             .register('sw.js')
-        //             .then(function () { console.log("Service Worker Registered"); });
-        //     }
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker
+                .register('sw.js')
+                .then(function () { console.log("Service Worker Registered"); });
+        }
 
     </script>
 
