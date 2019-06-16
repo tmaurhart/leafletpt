@@ -1,6 +1,12 @@
 body {
     margin: 0;
 }
+
 #mapid {
     height: 100vh;
+}
+
+.redMarker {
+    background: red;
+    border-radius: 50%;
 }

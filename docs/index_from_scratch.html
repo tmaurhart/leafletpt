@@ -4,10 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Leaflet - Prototype</title>
-    <meta name="author" content="Sascha Popp, Thomas Maurhart">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
     <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
@@ -18,16 +16,9 @@
 
     <link href="css/leaflet.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <style>
-        .redMarker {
-            background: red;
-            border-radius: 50%;
-        }
-    </style>
 
     <script src="js/leaflet.js"></script>
     <script src="js/leaflet-tilelayer-wmts.js"></script>
-
 
 </head>
 
@@ -56,10 +47,10 @@
 
         // init the map
         let map = L.map('mapid', {
-                minZoom: 18,
-                maxZoom: 18,
-                zoomControl: false
-            }).setView([52.520007, 13.404954], 18);
+            minZoom: 18,
+            maxZoom: 18,
+            zoomControl: false
+        }).setView([52.520007, 13.404954], 18);
 
         //map.zoomControl.remove();
         map.touchZoom.disable();
@@ -171,6 +162,12 @@
             for (let i = removeTargets.length - 1; i >= 0; i--) {
                 targets.splice(removeTargets[i], 1);
             }
+        }
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker
+                .register('sw.js')
+                .then(function () { console.log("Service Worker Registered"); });
         }
 
     </script>
