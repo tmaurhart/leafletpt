@@ -9,7 +9,7 @@ self.addEventListener('install', function (e) {
                     'css/leaflet.css',
                     'css/style.css',
                     'js/leaflet.js',
-                    'leaflet-tilelayer-wmts.js',
+                    'js/leaflet-tilelayer-wmts.js',
                     'favicon.ico',
                     'favicons/icon-512x512.png',
                     'favicons/android-chrome-192x192.png',
