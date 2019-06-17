@@ -1,12 +1,36 @@
 body {
     margin: 0;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    color: white;
+    font-size: 24px;
+}
+
+header {
+    background: tomato;
+    height: 10vh;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 #mapid {
-    height: 100vh;
+    height: 90vh;
 }
 
 .redMarker {
     background: red;
     border-radius: 50%;
+}
+
+svg {
+    width: 30px;
+}
+
+path {
+    fill: #fff;
+}
+
+button {
+    padding: 0;
 }
