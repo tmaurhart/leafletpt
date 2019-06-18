@@ -91,14 +91,14 @@
         let targetsGroup = L.layerGroup().addTo(map);
 
         // geolocation
-        map.locate({ setView: true });
+        map.locate();
         map.on('locationfound', onLocationFound);
         map.on('locationerror', onLocationError);
 
         // geolocation success
         function onLocationFound(e) {
             //let radius = e.accuracy;
-            map.setView([e.latlng.lat, e.latlng.lng], 18);
+            map.panTo(e.latlng, 18);
 
             if (typeof (currentPositionMarker) === 'undefined') {
                 currentPositionMarker = L.marker(e.latlng).addTo(map);
@@ -130,7 +130,7 @@
             targets = [];
             targetsGroup.clearLayers();
             gamestate.innerHTML = `${numberOfTargets} to go`;
-            map.locate({ setView: true });
+            map.locate();
             //map.setView([currentPosition.lat, currentPosition.lng], 18);
         }
 
