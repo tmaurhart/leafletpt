@@ -104,7 +104,7 @@
 
                 // geolocation watcher
                 if (navigator.geolocation) {
-                    watchID = navigator.geolocation.watchPosition(function (position) {
+                    navigator.geolocation.watchPosition(function (position) {
                         updateCurrentMarkerPosition(position);
                     });
                 } else { // Not supported
@@ -119,8 +119,6 @@
 
             // put N random positions / targets within the map bound and add to targets array
             addTargets();
-
-
         }
 
         // geolocation error
@@ -134,7 +132,7 @@
             targetsGroup.clearLayers();
             gamestate.innerHTML = `${numberOfTargets} place to go`;
             map.locate({ setView: true });
-            //addTargets();
+            map.setView(currentPostion, 18);
         }
 
         // add random Targets
@@ -208,11 +206,11 @@
             }
         }
 
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker
-                .register('sw.js')
-                .then(function () { console.log("Service Worker Registered"); });
-        }
+        // if ('serviceWorker' in navigator) {
+        //     navigator.serviceWorker
+        //         .register('sw.js')
+        //         .then(function () { console.log("Service Worker Registered"); });
+        // }
 
     </script>
 
