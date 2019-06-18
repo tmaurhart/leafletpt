@@ -48,10 +48,9 @@
         let currentPositionMarker;
         let currentPostion;
         let targets = [];
-        let numberOfTargets = 2; // Number of targets to find
-        let minDistanceToMarker = 50; // in metres - change to 10 or so for live
+        let numberOfTargets = 5; // Number of targets to find
+        let minDistanceToMarker = 20; // in metres - change to 10 or so for live
         let cssIcon = L.divIcon({ className: 'redMarker', iconSize: [20, 20] });
-
 
         // restart
         let restart = document.querySelector('#restart');
@@ -98,10 +97,20 @@
 
         // geolocation success
         function onLocationFound(e) {
-            let radius = e.accuracy;
+            //let radius = e.accuracy;
 
             if (typeof (currentPositionMarker) === 'undefined') {
                 currentPositionMarker = L.marker(e.latlng).addTo(map);
+
+                // geolocation watcher
+                if (navigator.geolocation) {
+                    watchID = navigator.geolocation.watchPosition(function (position) {
+                        updateCurrentMarkerPosition(position);
+                    });
+                } else { // Not supported
+                    alert("Oops! This browser does not support HTML Geolocation.");
+                }
+
             } else {
                 currentPositionMarker.setLatLng(e.latlng);
             }
@@ -111,14 +120,7 @@
             // put N random positions / targets within the map bound and add to targets array
             addTargets();
 
-            // geolocation watcher
-            if (navigator.geolocation) {
-                watchID = navigator.geolocation.watchPosition(function (position) {
-                    updateCurrentMarkerPosition(position);
-                });
-            } else { // Not supported
-                alert("Oops! This browser does not support HTML Geolocation.");
-            }
+
         }
 
         // geolocation error
@@ -128,11 +130,11 @@
 
         // reset map targets
         function resetMap() {
-            map.locate({ setView: true });
             targets = [];
             targetsGroup.clearLayers();
             gamestate.innerHTML = `${numberOfTargets} place to go`;
-            addTargets();
+            map.locate({ setView: true });
+            //addTargets();
         }
 
         // add random Targets
