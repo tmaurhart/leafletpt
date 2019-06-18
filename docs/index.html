@@ -91,33 +91,34 @@
         let targetsGroup = L.layerGroup().addTo(map);
 
         // geolocation
-        map.locate();
+        map.locate({ 'setView': true });
         map.on('locationfound', onLocationFound);
         map.on('locationerror', onLocationError);
 
         // geolocation success
         function onLocationFound(e) {
-            //let radius = e.accuracy;
-            map.panTo(e.latlng, 18);
 
-            if (typeof (currentPositionMarker) === 'undefined') {
+            currentPosition = e.latlng;
+            map.setMaxBounds(map.getBounds());
+            addTargets();
+            //let radius = e.accuracy;
+           // map.panTo(e.latlng, 18);
+
+            //if (typeof (currentPositionMarker) === 'undefined') {
                 currentPositionMarker = L.marker(e.latlng).addTo(map);
                 // geolocation watcher
                 if (navigator.geolocation) {
                     navigator.geolocation.watchPosition(function (position) {
                         updateCurrentMarkerPosition(position);
                     });
-                } else { // Not supported
-                    alert("Oops! This browser does not support HTML Geolocation.");
                 }
-            } else {
-                currentPositionMarker.setLatLng(e.latlng);
-            }
-            currentPosition = e.latlng;
-            map.setMaxBounds(map.getBounds());
+            // } else {
+            //     currentPositionMarker.setLatLng(e.latlng);
+            // }
+
 
             // put N random positions / targets within the map bound and add to targets array
-            addTargets();
+
         }
 
         // geolocation error
@@ -127,10 +128,11 @@
 
         // reset map targets
         function resetMap() {
-            targets = [];
-            targetsGroup.clearLayers();
-            gamestate.innerHTML = `${numberOfTargets} to go`;
-            map.locate();
+            location.reload();
+            // targets = [];
+            // targetsGroup.clearLayers();
+            // gamestate.innerHTML = `${numberOfTargets} to go`;
+            // map.locate();
             //map.setView([currentPosition.lat, currentPosition.lng], 18);
         }
 
@@ -165,10 +167,10 @@
 
         // update the current position marker on the map
         function updateCurrentMarkerPosition(currentPosition) {
-            let latlng = new L.LatLng(currentPosition.coords.latitude, currentPosition.coords.longitude);
-            map.setView(latlng, 18);
-            currentPositionMarker.setLatLng(latlng);
-            checkOnTargets(latlng);
+            currentPosition = new L.LatLng(currentPosition.coords.latitude, currentPosition.coords.longitude);
+            map.setView(currentPosition, 18);
+            currentPositionMarker.setLatLng(currentPosition);
+            checkOnTargets(currentPosition);
         }
 
         // check if we are close to a target
