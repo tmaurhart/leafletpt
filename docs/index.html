@@ -99,7 +99,12 @@
         // geolocation success
         function onLocationFound(e) {
             let radius = e.accuracy;
-            currentPositionMarker = L.marker(e.latlng).addTo(map);
+
+            if (typeof (currentPositionMarker) === 'undefined') {
+                currentPositionMarker = L.marker(e.latlng).addTo(map);
+            } else {
+                currentPositionMarker.setLatLng(e.latlng);
+            }
             currentPostion = e.latlng;
             map.setMaxBounds(map.getBounds());
 
@@ -123,7 +128,7 @@
 
         // reset map targets
         function resetMap() {
-            //map.locate({ setView: true });
+            map.locate({ setView: true });
             targets = [];
             targetsGroup.clearLayers();
             gamestate.innerHTML = `${numberOfTargets} place to go`;
