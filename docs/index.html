@@ -56,8 +56,9 @@
         let restart = document.querySelector('#restart');
         restart.addEventListener('click', (e) => {
             e.preventDefault();
-            resetMap();
+            location.reload();
         });
+
         // game state field
         let gamestate = document.querySelector('#gamestate');
         gamestate.innerHTML = `${numberOfTargets} to go`;
@@ -68,15 +69,11 @@
             maxZoom: 18,
             zoomControl: false
         })
-        //.setView([52.520007, 13.404954], 18);
-
-        //map.zoomControl.remove();
         map.touchZoom.disable();
         map.doubleClickZoom.disable();
         map.scrollWheelZoom.disable();
 
-        // add the layer
-        // Austrian basemap but used mapbox below for now for worldview
+        // Austrian basemap but used mapbox below but giving lots of tiles not found errors
         // L.tileLayer("https://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
         //     subdomains: ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
         //     attribution: '&copy; <a href="http://basemap.at">Basemap.at</a>, Paula, Emanuel, Guni, Tom',
@@ -89,7 +86,7 @@
             accessToken: 'pk.eyJ1IjoiZ3VuaGFydGgiLCJhIjoiY2p3dG5pdDI5MDFmMDQzbzRlZ2RkMXN0diJ9.cu5CtQ7YyINFsEOya5c8Bg'
         }).addTo(map);
 
-        let targetsGroup = L.layerGroup().addTo(map);
+        let targetsGroup = L.layerGroup().addTo(map); // let's put all targets on a layerGroup
 
         // geolocation
         map.locate({ 'setView': true });
@@ -98,43 +95,22 @@
 
         // geolocation success
         function onLocationFound(e) {
+            currentPosition = e.latlng; // get current position
+            map.setMaxBounds(map.getBounds()); // set map area to viewport
+            currentPositionMarker = L.marker(currentPosition).addTo(map); // set the marker
+            addTargets(); // add N random targets to got to
 
-            currentPosition = e.latlng;
-            map.setMaxBounds(map.getBounds());
-            addTargets();
-            //let radius = e.accuracy;
-           // map.panTo(e.latlng, 18);
-
-            //if (typeof (currentPositionMarker) === 'undefined') {
-                currentPositionMarker = L.marker(e.latlng).addTo(map);
-                // geolocation watcher
-                if (navigator.geolocation) {
-                    navigator.geolocation.watchPosition(function (position) {
-                        updateCurrentMarkerPosition(position);
-                    });
-                }
-            // } else {
-            //     currentPositionMarker.setLatLng(e.latlng);
-            // }
-
-
-            // put N random positions / targets within the map bound and add to targets array
-
+            // start the geolocation watcher
+            if (navigator.geolocation) {
+                navigator.geolocation.watchPosition(function (position) {
+                    updateCurrentMarkerPosition(position);
+                });
+            }
         }
 
         // geolocation error
         function onLocationError(e) {
             alert(e.message);
-        }
-
-        // reset map targets
-        function resetMap() {
-            location.reload();
-            // targets = [];
-            // targetsGroup.clearLayers();
-            // gamestate.innerHTML = `${numberOfTargets} to go`;
-            // map.locate();
-            //map.setView([currentPosition.lat, currentPosition.lng], 18);
         }
 
         // add random Targets
@@ -174,8 +150,7 @@
             checkOnTargets(currentPosition);
         }
 
-        // check if we are close to a target
-        // if yes, let's just remove it for now
+        // check if we are in distance to a target
         function checkOnTargets(latlng) {
             let targetsToRemove = '';
             for (let i = 0; i < targets.length; i++) {
@@ -200,6 +175,7 @@
             gameState();
         }
 
+        // Update game state
         function gameState() {
             if (targets.length == 0) {
                 gamestate.innerHTML = 'You found all places';
@@ -208,6 +184,7 @@
             }
         }
 
+        // Register the Service Worker
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker
                 .register('sw.js')
