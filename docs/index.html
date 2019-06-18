@@ -46,7 +46,7 @@
     <script>
         // settings
         let currentPositionMarker;
-        let currentPostion;
+        let currentPosition;
         let targets = [];
         let numberOfTargets = 5; // Number of targets to find
         let minDistanceToMarker = 20; // in metres - change to 10 or so for live
@@ -60,7 +60,7 @@
         });
         // game state field
         let gamestate = document.querySelector('#gamestate');
-        gamestate.innerHTML = `${numberOfTargets} place to go`;
+        gamestate.innerHTML = `${numberOfTargets} to go`;
 
         // init the map
         let map = L.map('mapid', {
@@ -98,10 +98,10 @@
         // geolocation success
         function onLocationFound(e) {
             //let radius = e.accuracy;
+            map.setView([e.latlng.lat, e.latlng.lng], 18);
 
             if (typeof (currentPositionMarker) === 'undefined') {
                 currentPositionMarker = L.marker(e.latlng).addTo(map);
-
                 // geolocation watcher
                 if (navigator.geolocation) {
                     navigator.geolocation.watchPosition(function (position) {
@@ -110,11 +110,10 @@
                 } else { // Not supported
                     alert("Oops! This browser does not support HTML Geolocation.");
                 }
-
             } else {
                 currentPositionMarker.setLatLng(e.latlng);
             }
-            currentPostion = e.latlng;
+            currentPosition = e.latlng;
             map.setMaxBounds(map.getBounds());
 
             // put N random positions / targets within the map bound and add to targets array
@@ -130,9 +129,9 @@
         function resetMap() {
             targets = [];
             targetsGroup.clearLayers();
-            gamestate.innerHTML = `${numberOfTargets} place to go`;
+            gamestate.innerHTML = `${numberOfTargets} to go`;
             map.locate({ setView: true });
-            map.setView(currentPostion, 18);
+            //map.setView([currentPosition.lat, currentPosition.lng], 18);
         }
 
         // add random Targets
@@ -159,14 +158,14 @@
 
         // Click on target
         function targetOnClick(e) {
-            let distance = Math.floor(map.distance(currentPostion, e.latlng));
+            let distance = Math.floor(map.distance(currentPosition, e.latlng));
             let pop = e.target.getPopup();
             pop.setContent(`Distance: ${distance} meters`).openPopup();
         }
 
         // update the current position marker on the map
-        function updateCurrentMarkerPosition(currentPostion) {
-            let latlng = new L.LatLng(currentPostion.coords.latitude, currentPostion.coords.longitude);
+        function updateCurrentMarkerPosition(currentPosition) {
+            let latlng = new L.LatLng(currentPosition.coords.latitude, currentPosition.coords.longitude);
             map.setView(latlng, 18);
             currentPositionMarker.setLatLng(latlng);
             checkOnTargets(latlng);
