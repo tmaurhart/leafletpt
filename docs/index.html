@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Leaflet - Prototype</title>
+    <title>Leaflet Location Game</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
@@ -18,7 +18,7 @@
     <link href="css/style.css" rel="stylesheet">
 
     <script src="js/leaflet.js"></script>
-    <script src="js/leaflet-tilelayer-wmts.js"></script>
+    <!-- <script src="js/leaflet-tilelayer-wmts.js"></script> -->
 
 </head>
 
@@ -138,6 +138,7 @@
         // Click on target
         function targetOnClick(e) {
             let distance = Math.floor(map.distance(currentPosition, e.latlng));
+            console.log(distance)
             let pop = e.target.getPopup();
             pop.setContent(`Distance: ${distance} meters`).openPopup();
         }
