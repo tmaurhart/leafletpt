@@ -80,29 +80,13 @@
         // }).addTo(map);
 
         // Mapbox Street Map
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZ3VuaGFydGgiLCJhIjoiY2p3dG5pdDI5MDFmMDQzbzRlZ2RkMXN0diJ9.cu5CtQ7YyINFsEOya5c8Bg', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            id: 'mapbox.streets',
+            accessToken: 'pk.eyJ1IjoiZ3VuaGFydGgiLCJhIjoiY2p3dG5pdDI5MDFmMDQzbzRlZ2RkMXN0diJ9.cu5CtQ7YyINFsEOya5c8Bg'
+        }).addTo(map);
 
-
-        var grayscale = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZ3VuaGFydGgiLCJhIjoiY2p3dG5pdDI5MDFmMDQzbzRlZ2RkMXN0diJ9.cu5CtQ7YyINFsEOya5c8Bg', {
-                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                id: 'mapbox.streets',
-                accessToken: 'pk.eyJ1IjoiZ3VuaGFydGgiLCJhIjoiY2p3dG5pdDI5MDFmMDQzbzRlZ2RkMXN0diJ9.cu5CtQ7YyINFsEOya5c8Bg'
-            }),
-            streets = L.tileLayer("https://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
-            subdomains: ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
-             attribution: '&copy; <a href="http://basemap.at">Basemap.at</a>, Paula, Emanuel, Guni, Tom',
-         });
-
-        var baseMaps = {
-            "Grayscale": grayscale,
-            "Streets": streets
-        };
-
-        
-
-
-        let targetsGroup = L.layerGroup(); // let's put all targets on a layerGroup
-
-        L.control.layers(baseMaps, targetsGroup).addTo(map);
+        let targetsGroup = L.layerGroup().addTo(map); // let's put all targets on a layerGroup
 
         // geolocation
         map.locate({ 'setView': true });
