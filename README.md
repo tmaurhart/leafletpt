@@ -1,5 +1,5 @@
 # Geolocation Game
-## Take a stroll in the park with gamification
+## Take a gamified stroll in the park
 
 - find 5 random places near your location
 - get within 10 meters of a place to mark it green
