@@ -19,6 +19,7 @@ self.addEventListener('install', function (e) {
                     'icons/mstile-150x150.png',
                     'icons/safari-pinned-tab.svg',
                     'images/marker-icon-2x.png',
+                    'images/marker-icon.png',
                     'images/marker-shadow.png',
                     'manifest.webmanifest'
                 ]);
