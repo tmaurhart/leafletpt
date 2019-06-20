@@ -18,7 +18,6 @@
     <link href="css/style.css" rel="stylesheet">
 
     <script src="js/leaflet.js"></script>
-    <!-- <script src="js/leaflet-tilelayer-wmts.js"></script> -->
 
 </head>
 
@@ -73,7 +72,7 @@
         map.doubleClickZoom.disable();
         map.scrollWheelZoom.disable();
 
-        // Austrian basemap but used mapbox below but giving lots of tiles not found errors
+        // Austrian basemap - as it was giving lots of tiles not found errors but we used mapbox
         // L.tileLayer("https://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
         //     subdomains: ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
         //     attribution: '&copy; <a href="http://basemap.at">Basemap.at</a>, Paula, Emanuel, Guni, Tom',

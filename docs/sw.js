@@ -9,18 +9,17 @@ self.addEventListener('install', function (e) {
                     'css/leaflet.css',
                     'css/style.css',
                     'js/leaflet.js',
-                    // 'js/leaflet-tilelayer-wmts.js',
-                    // 'icons/favicon.ico',
-                    // 'icons/icon-512x512.png',
-                    // 'icons/android-chrome-192x192.png',
-                    // 'icons/android-chrome-256x256.png',
-                    // 'icons/android-chrome-512x512.png',
-                    // 'icons/apple-touch-icon.png',
+                    'icons/favicon.ico',
+                    'icons/android-chrome-192x192.png',
+                    'icons/android-chrome-256x256.png',
+                    'icons/android-chrome-512x512.png',
+                    'icons/apple-touch-icon.png',
                     'icons/favicon-16x16.png',
                     'icons/favicon-32x32.png',
-                    // 'icons/mstile-150x150.png',
-                    // 'icons/safari-pinned-tab.svg',
+                    'icons/mstile-150x150.png',
+                    'icons/safari-pinned-tab.svg',
                     'images/marker-icon-2x.png',
+                    'images/marker-shadow.png',
                     'manifest.webmanifest'
                 ]);
             })
@@ -42,15 +41,6 @@ self.addEventListener('activate', function (e) {
     return self.clients.claim();
 });
 
-
-// self.addEventListener('fetch', function (e) {
-//     e.respondWith(
-//         caches.match(e.request).then(function (response) {
-//             return response || fetch(e.request);
-//         })
-//     );
-// });
-
 self.addEventListener('fetch', function (event) {
     event.respondWith(
         caches.open(swCache).then(function (cache) {
@@ -63,17 +53,3 @@ self.addEventListener('fetch', function (event) {
         })
     );
 });
-
-// self.addEventListener('fetch', function (event) {
-//     let online = navigator.onLine
-//     if (!online) {
-//         event.respondWith(
-//             caches.match(event.request).then(function (res) {
-//                 if (res) {
-//                     return res;
-//                 }
-//                 requestBackend(event);
-//             })
-//         )
-//     }
-// });
