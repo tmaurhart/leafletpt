@@ -1,17 +1,22 @@
 {
-    "name": "Leaflet PT",
-    "short_name": "Leaflet PT",
+    "name": "LocationGame",
+    "short_name": "LocationGame",
     "display": "standalone",
     "scope": "/leafletpt/",
     "start_url": "/leafletpt/",
     "orientation": "portrait",
     "background_color": "#2b3e51",
     "theme_color": "#2b3e51",
-    "description": "Leaflet Prototype",
+    "description": "Location Game",
     "icons": [
         {
             "src": "icons/icon512.png",
             "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/icon256.png",
+            "sizes": "256x256",
             "type": "image/png"
         },
         {
@@ -23,6 +28,11 @@
         {
             "src": "icons/android-chrome-192x192.png",
             "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-256x256.png",
+            "sizes": "256x256",
             "type": "image/png"
         },
         {
