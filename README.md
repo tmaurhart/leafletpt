@@ -1,5 +1,5 @@
 # Geolocation Game
-## Take a gamified PWA-stroll in the park
+## Take a Gamified PWA Stroll in the Park
 
 - find 5 random places near your location
 - get within 10 meters of a place to mark it green
