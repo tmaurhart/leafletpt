@@ -11,4 +11,4 @@
 Hosted on Github https://tmaurhart.github.io/leafletpt/
 
 ## Screenshot
-![alt text](screenshot.png "Logo Title Text 1")
+![alt text](screenshot.png "Screenshot")
