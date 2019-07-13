@@ -19,7 +19,9 @@
     "url": "https://github.com/tmaurhart/leafletpt/issues"
   },
   "homepage": "https://github.com/tmaurhart/leafletpt#readme",
-  "dependencies": {},
+  "dependencies": {
+    "lodash": "^4.17.14"
+  },
   "devDependencies": {
     "browser-sync": "^2.26.5"
   }
