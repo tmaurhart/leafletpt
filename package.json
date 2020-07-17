@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/tmaurhart/leafletpt#readme",
   "dependencies": {
-    "lodash": "^4.17.14"
+    "lodash": "^4.17.19"
   },
   "devDependencies": {
     "browser-sync": "^2.26.5"
